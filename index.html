@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0a">
 <title>Vanek tattoo — татуировки на заказ</title>
 <meta name="description" content="Татуировки на заказ. Портфолио, прайс, запись.">
 
@@ -85,8 +86,11 @@
   .nav-links{ display:flex; gap:32px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; }
   .nav-links a{ opacity:0.8; transition:opacity .2s, color .2s; }
   .nav-links a:hover{ opacity:1; color:var(--accent); }
-  .burger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; z-index:60; }
-  .burger span{ width:22px; height:1px; background:var(--stone); display:block; }
+  .burger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; z-index:60; padding:10px; margin:-10px; }
+  .burger span{ width:22px; height:1px; background:var(--stone); display:block; transition:transform .25s ease, opacity .2s ease; }
+  .burger.is-open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+  .burger.is-open span:nth-child(2){ opacity:0; }
+  .burger.is-open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
 
   .mobile-panel{
     position:fixed; inset:0; z-index:45; background:var(--ink);
@@ -99,13 +103,6 @@
   /* ---------- hero ---------- */
   .hero{ min-height:100vh; display:flex; align-items:center; padding-top:80px; overflow:hidden; }
   .hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center; position:relative; z-index:2; }
-
-  .patch-tag{
-    display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace;
-    font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent);
-    border:0.5px solid var(--line-strong); padding:7px 14px; margin-bottom:26px;
-    clip-path:polygon(6% 0, 100% 0, 94% 100%, 0 100%);
-  }
 
   h1.hero-title{
     font-size:clamp(3.2rem,8vw,6.4rem); line-height:0.86;
@@ -133,9 +130,9 @@
   .splash--a{ width:520px; height:520px; background:radial-gradient(circle, var(--stone) 0%, transparent 70%); top:-200px; left:-180px; opacity:0.05; }
   .splash--b{ width:420px; height:420px; background:radial-gradient(circle, var(--accent) 0%, transparent 70%); bottom:-180px; right:-140px; opacity:0.06; }
 
-  .corner{ position:fixed; font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); z-index:2; }
-  .corner--bl{ bottom:24px; left:24px; }
-  .corner--br{ bottom:24px; right:24px; text-align:right; }
+  .corner{ position:absolute; font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); z-index:2; }
+  .corner--bl{ bottom:24px; left:32px; }
+  .corner--br{ bottom:24px; right:32px; text-align:right; }
 
   /* ---------- about ---------- */
   .about{ border-top:0.5px solid var(--line); }
@@ -191,16 +188,12 @@
 
   /* ---------- booking ---------- */
   .booking-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:start; }
-  .contact-list{ display:flex; flex-direction:column; gap:14px; margin-top:28px; }
-  .contact-list a{ display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--muted); transition:color .2s; }
-  .contact-list a::before{ content:'→'; color:var(--accent); }
-  .contact-list a:hover{ color:var(--stone); }
 
   form{ display:flex; flex-direction:column; gap:16px; }
   .field{ display:flex; flex-direction:column; gap:6px; }
   .field label{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
   .field input, .field textarea{
-    font-family:'Inter', sans-serif; font-size:15px; padding:12px 14px;
+    font-family:'Inter', sans-serif; font-size:16px; padding:12px 14px;
     background:var(--panel); border:0.5px solid var(--line-strong); color:var(--stone);
     outline:none; transition:border-color .2s;
   }
@@ -222,13 +215,21 @@
   .to-top{ border:0.5px solid var(--line-strong); padding:8px 16px; text-transform:uppercase; letter-spacing:0.12em; font-size:10px; transition:border-color .2s, color .2s; }
   .to-top:hover{ border-color:var(--accent); color:var(--accent); }
 
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; text-align:center; }
+    .hero-sub{ margin-left:auto; margin-right:auto; }
+    .hero-actions{ justify-content:center; }
+    .hero-art{ order:-1; max-width:280px; margin:0 auto; }
+  }
+
   @media (max-width:640px){
     .nav-links{ display:none; }
     .burger{ display:flex; }
     section{ padding:70px 0; }
     .wrap{ padding:0 20px; }
-    .hero-grid{ grid-template-columns:1fr; }
-    .hero-art{ order:-1; max-width:260px; }
+    nav{ padding:18px 20px; }
+    .hero-art{ max-width:220px; }
+    .corner{ display:none; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -282,10 +283,9 @@
         <img src="images/hero-face.png" alt="Портрет мастера Vanek" width="640" height="1117">
       </div>
     </div>
+    <div class="corner corner--bl">ONE SESSION<br>AT A TIME</div>
+    <div class="corner corner--br">EST. 2019<br>СЛОТЫ ОТКРЫТЫ</div>
   </header>
-
-  <div class="corner corner--bl">ONE SESSION<br>AT A TIME</div>
-  <div class="corner corner--br">EST. 2019<br>СЛОТЫ ОТКРЫТЫ</div>
 
   <section class="about" id="about">
     <div class="wrap about-grid">
@@ -442,10 +442,6 @@
         <h2 class="section-title display">На сеанс</h2>
         <p style="color:var(--muted); font-size:15px; line-height:1.7; max-width:400px; margin-top:12px;">Опишите идею, примерный размер и место на теле — отвечаю в течение дня.</p>
         <a href="https://t.me/nvknj?text=Здравствуйте!%20Хочу%20записаться%20на%20тату." target="_blank" rel="noopener" class="btn btn--solid" style="display:inline-block; margin-top:24px;">Написать в телеграм</a>
-        <div class="contact-list" style="margin-top:24px;">
-          <a href="https://wa.me/79990000000" target="_blank" rel="noopener">WhatsApp</a>
-          <a href="mailto:hello@vanektattoo.ru">hello@vanektattoo.ru</a>
-        </div>
       </div>
       <form id="bookingForm" class="reveal">
         <div class="field">
@@ -481,8 +477,14 @@
 
     const burger = document.getElementById('burger');
     const panel = document.getElementById('mobilePanel');
-    burger.addEventListener('click', () => panel.classList.toggle('open'));
-    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => panel.classList.remove('open')));
+    burger.addEventListener('click', () => {
+      panel.classList.toggle('open');
+      burger.classList.toggle('is-open');
+    });
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      panel.classList.remove('open');
+      burger.classList.remove('is-open');
+    }));
 
     const revealEls = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
